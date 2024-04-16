@@ -23,12 +23,12 @@ python pretrain_pocket.py
 
 The first training stage:
 ```
-python train_first.py
+python train_rec.py
 ```
 
 The second training stage:
 ```
-python train_second.py
+python train_agent.py
 ```
 
 ## Sampling
