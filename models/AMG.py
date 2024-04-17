@@ -1,5 +1,5 @@
-import warnings
-warnings.filterwarnings("ignore")
+# Codes for AMG achitecture
+
 import torch
 import torch.nn as nn
 from torch.nn import Module, Linear
