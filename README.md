@@ -3,8 +3,8 @@
 
 
 ## Prerequisites
-- python3, pytorch, numpy, etc.
 - We have presented the our conda environment file in `./environment.yml`.
+- We have evaluated our models use external tools, including: [Qvina](https://qvina.github.io/), [Pyscreener](https://github.com/coleygroup/pyscreener).
 
 ## Dataset
 - We pre-trained our model using the natural product dataset [COCONUT](https://coconut.naturalproducts.net) and the Pocket3D dataset collected from the [Protein Data Bank](https://www.rcsb.org/). The dataset used for fine-tuning was obtained from [CrossDocked2020](https://bits.csb.pitt.edu/files/crossdock2020/).
