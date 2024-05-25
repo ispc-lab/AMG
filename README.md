@@ -11,7 +11,7 @@
 - To facilitate your implementation, we have provided the raw datasets used by AMG. Download the dataset archive from [AMG-DATA](https://drive.google.com/drive/folders/1YmqKfIDiDWkRVJGGcoPtCVPwhMPSHi2E).
 
 ## Training
-Ligand encoder and fragment-based pre-training:
+Ligand encoder and fragment-based decoder pre-training:
 ```
 python pretrain_ligand.py
 ```
