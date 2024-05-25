@@ -3,7 +3,7 @@
 
 
 ## Prerequisites
-- We have presented the our conda environment file in `./environment.yml`.
+- We have presented the conda environment file in `./environment.yml`.
 - We have evaluated our models use external tools, including: [Qvina](https://qvina.github.io/), [Pyscreener](https://github.com/coleygroup/pyscreener).
 
 ## Dataset
