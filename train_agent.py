@@ -7,7 +7,7 @@ import gym
 from models.actor_critic import AMG_ActorCritic
 from utils.misc import seed_all, load_config, get_new_log_dir, get_logger
 from utils.mol_tree import Vocab
-import time
+# import time
 import numpy as np
 import torch
 from torch.optim import Adam
