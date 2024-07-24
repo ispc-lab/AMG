@@ -5,7 +5,7 @@ import torch
 from torch.nn.utils import clip_grad_norm_
 import torch.utils.tensorboard
 import numpy as np
-# from torch_geometric.loader import DataLoader
+from torch_geometric.loader import DataLoader
 from models.AMG_PTPkt import AMG_PTPkt
 from utils.datasets import *
 from utils.misc import *
