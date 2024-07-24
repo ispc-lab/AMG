@@ -2,7 +2,7 @@ import warnings
 warnings.filterwarnings("ignore")
 import shutil
 import argparse
-from tqdm.auto import tqdm
+# from tqdm.auto import tqdm
 import torch
 from torch.nn.utils import clip_grad_norm_
 import torch.utils.tensorboard
