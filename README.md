@@ -1,7 +1,5 @@
 # AMG
- The official repository of our paper "Deep reinforcement learning as an interaction agent to steer fragment-based 3D molecular generation for protein pockets". 
- 
- :star2: The complete repository is under construction (updated on July 24, 2024).
+  :star2: The official repository of our paper "Deep reinforcement learning as an interaction agent to steer fragment-based 3D molecular generation for protein pockets". The complete repository is under construction (updated on July 24, 2024).
 
 
 ## Prerequisites
