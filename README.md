@@ -14,6 +14,10 @@ conda activate AMG
 conda install pytorch==1.13.1  pytorch-cuda=11.7 -c pytorch -c nvidia
 conda install -c conda-forge pdbfixer
 pip install pyscreener
+pip install -U "ray[default]"
+
+cd ADFRsuite_x86_64Linux_1.0
+./install.sh -d myFolder -c 0
 
 cd spinningup
 pip install -e .
