@@ -1,0 +1,65 @@
+dataset:
+  name: Pocket_Ligand
+  path: ./dataset/crossdocked_pocket10/raw
+  split: ./dataset/crossdocked_pocket10/split_crossdocked_pocket.pt
+
+RL:
+  epochs: 3000
+  env: Pendulum-v0
+  steps: 5000 #600
+  gamma: 0.99
+  l: 2
+  hid: 64
+  clip_ratio: 0.2
+  steps_per_epoch: 5000
+  pi_lr: 3.e-4
+  vf_lr: 1.e-3
+  train_pi_iters: 80
+  train_v_iters: 80
+  lam: 0.97
+  max_ep_len: 1000
+  target_kl: 0.01
+  save_freq: 10
+
+model:
+  hidden_channels: 256
+  random_alpha: True
+
+sample:
+  seed: 2023
+  num_samples: 10000
+  steps: 600
+  beam_size: 300
+  logp_thres: -.inf
+  num_retry: 5
+  max_steps:  12  # 20
+   #12
+  num_workers: 4
+
+train:
+  seed: 2023
+  num_workers: 4
+  max_iters: 1_000_000
+  val_freq: 10000
+  pos_noise_std: 0.1
+  max_grad_norm: 100
+  optimizer:
+    type: adam
+    lr: 1.e-4      # 1.e-4
+    weight_decay: 0
+    beta1: 0.99
+    beta2: 0.999
+  scheduler:
+    type: plateau   # plateau
+    factor: 0.6
+    patience: 10
+    min_lr: 1.e-5       #1.e-6
+  transform:
+    mask:
+      type: all   # bfs
+      min_ratio: 0.0
+      max_ratio: 1.2
+      min_num_masked: 1
+      min_num_unmasked: 0    # 0
+
+

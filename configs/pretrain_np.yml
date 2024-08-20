@@ -1,0 +1,64 @@
+model:
+  hidden_channels: 256
+  random_alpha: False
+  encoder:
+    name: tf 
+    hidden_channels: 256
+    edge_channels: 64
+    key_channels: 128
+    num_heads: 4
+    num_interactions: 6
+    cutoff: 10.0
+    knn: 48 # kNN Graph
+    random_alpha: False
+    num_filters: 128
+  field:
+    name: classifier
+    num_filters: 128
+    cutoff: 10.0
+    knn: 32 # kNN Graph
+
+  # interaction:
+  dim_gnn: 128
+  cal_der_loss: True
+  no_rotor_penalty: False
+  dm_min: 0.5
+  loss_der1_ratio: 10.0
+  loss_der2_ratio: 10.0
+  min_loss_der2: 20.0
+  dev_vdw_radius: 0.2       # deviation of vdw radius
+  max_vdw_interaction: 0.0356
+  min_vdw_interaction: 0.0178
+  vdw_N: 6.0
+
+train:
+  multi_gpu: False
+  seed: 2023
+  batch_size: 64
+  num_workers: 4
+  max_iters: 1_000_000
+  val_freq: 10000
+  pos_noise_std: 0.1
+  max_grad_norm: 100
+  optimizer:
+    type: adam
+    lr: 1.e-4      # 1.e-4
+    weight_decay: 0
+    beta1: 0.99
+    beta2: 0.999
+  scheduler:
+    type: plateau   # plateau
+    factor: 0.6
+    patience: 10
+    min_lr: 1.e-5       #1.e-6 
+  transform:
+    mask:
+      type: ligand_bfs
+      min_ratio: 0.0
+      max_ratio: 1.2
+      min_num_masked: 1
+      min_num_unmasked: 0    
+dataset:
+  name: NP
+  path: ./dataset/np/
+  split: ./dataset/np/split_np.pt
