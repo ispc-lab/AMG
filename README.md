@@ -1,6 +1,9 @@
 # AMG
 :boom: The official repository of our paper "Deep reinforcement learning as an interaction agent to steer fragment-based 3D molecular generation for protein pockets". 
 
+<p align="center">
+  <img src="assets/overview.png" /> 
+</p>
 
 ## Prerequisites
 :star2: We have presented the conda environment file in `./environment.yml`.
