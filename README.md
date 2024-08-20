@@ -1,5 +1,5 @@
 # AMG
-:boom: The official repository of our paper "Deep reinforcement learning as an interaction agent to steer fragment-based 3D molecular generation for protein pockets". The complete repository is under construction (updated on July 24, 2024).
+:boom: The official repository of our paper "Deep reinforcement learning as an interaction agent to steer fragment-based 3D molecular generation for protein pockets". 
 
 
 ## Prerequisites
@@ -54,3 +54,12 @@ python train_agent.py
 ```
 python sample.py
 ```
+## Evaluation
+### Evaluation from sampling results
+```
+python scripts/evaluate_amg.py
+```
+### Evaluation from meta files
+We provide the sampling results of our model and Pocket2Mol, TargetDiff, DecompDiff, ResGen, FLAG baselines [here]().
+
+You can directly reproduce the results reported in the paper quickly with [summary.ipynb](https://github.com/ispc-lab/AMG/blob/main/summary.ipynb).
