@@ -10,9 +10,14 @@ from rdkit.Chem.Descriptors import qed
 from utils.sascorer import compute_sa_score
 from utils.misc import *
 
+receptor_path = "/DATA1/east/AMG/ADFRsuite_x86_64Linux_1.0/myFolder/bin"
+vina_path = "/DATA1/east/AMG/Qvina/bin"
+os.environ['PATH'] += os.pathsep + receptor_path
+os.environ['PATH'] += os.pathsep + vina_path
+
 
 def cal_metrics(mol_list, pdb_path, save_path):
-    qed_list, logp_list, sa_list, Lip_list, qvina_list = [], [], [], []
+    qed_list, sa_list, Lip_list, qvina_list = [], [], [], []
     rdmol_list = []
     for mol in mol_list:
         try:
@@ -33,7 +38,7 @@ def cal_metrics(mol_list, pdb_path, save_path):
         except:
             qvina_list.append('nan')
     
-    df = pd.DataFrame({'SMILES': [Chem.MolToSmiles(i) for i in rdmol_list], 'Qvina': qvina_list, 'QED': qed_list, 'LogP': logp_list, 
+    df = pd.DataFrame({'SMILES': [Chem.MolToSmiles(i) for i in rdmol_list], 'Qvina': qvina_list, 'QED': qed_list, 
                        'SA': sa_list, 'Lip': Lip_list})
     df.to_csv(save_path + '.csv', index=False, mode='a')
 
@@ -65,17 +70,6 @@ if __name__ == '__main__':
     config = load_config('./configs/sample.yml')
     seed_all(config.sample.seed)
 
-    path = 'results/new/RL_np_reward/sample_1200/'  # sdf files 
-    save_result_path = 'results/new/RL_np_reward/sample_1200_results/'
+    path = 'results/sdf_files/'  # input sdf path 
+    save_result_path = 'results/eval_files/'
     gen_results_file(path, save_result_path)
-
-# results_path = '/DATA1/east/ResGen-main/outputs_final_results/'
-# results_path = '/DATA1/east/targetdiff-main/results_100/'
-# results_path = '/DATA1/east/DecompDiff-main/results/'
-
-# results_path = 'results/new/RL_np_reward_recovvery_ligand&protein/ckpt_200_results/'
-# results_path = '/home/east/projects/ScaRLPR/results/new/np_new_dataset/results_-5-5-5/'
-# results_path = 'results/ablation/3_wo_RL&PR_results/'
-# results_path = 'results/ablation/wo_PR_results/'
-# results_path = 'results/ablation/1_woRL_66k_results/'
-# results_path = 'results/obs60/ckpt200_results/'
