@@ -16,7 +16,7 @@ os.environ['PATH'] += os.pathsep + receptor_path
 os.environ['PATH'] += os.pathsep + vina_path
 
 
-def cal_metrics(mol_list, pdb_path, save_path):
+def cal_metrics(mol_list, pdb_path):
     qed_list, sa_list, Lip_list, qvina_list = [], [], [], []
     rdmol_list = []
     for mol in mol_list:
@@ -40,29 +40,26 @@ def cal_metrics(mol_list, pdb_path, save_path):
     
     df = pd.DataFrame({'SMILES': [Chem.MolToSmiles(i) for i in rdmol_list], 'Qvina': qvina_list, 'QED': qed_list, 
                        'SA': sa_list, 'Lip': Lip_list})
-    df.to_csv(save_path + '.csv', index=False, mode='a')
+    return df
 
 
 def gen_results_file(path, save_result_path):  
-    if not os.path.exists(save_result_path):
-        os.makedirs(save_result_path)
-    for result_dir in os.listdir(path):
+    eval_results = {}
 
+    for result_dir in tqdm(os.listdir(path)):
         mol_list = []
-        for file_name in os.listdir(path + result_dir):
-            if file_name == 'pocket_info.txt':
-                pdb_file_path = path + result_dir + '/' + file_name
-                with open(pdb_file_path, 'r') as file:
+        result_dir_path = os.path.join(path, result_dir)
+        for file_name in os.listdir(result_dir_path):
+            file_path = os.path.join(result_dir_path, file_name)
+            if file_name == 'pocket_info.txt': 
+                with open(file_path, 'r') as file:
                     pdb_name = file.readline()
                 pdb_path = os.path.join(config.dataset.path, pdb_name)
             if file_name[-3:] == 'sdf':
-                sdf_dir = path + result_dir + '/' + file_name
-                mol_list.append(Chem.MolFromMolFile(sdf_dir))
-    
-        cal_metrics(mol_list, pdb_path, save_result_path + result_dir)
-
-
-
+                mol_list.append(Chem.MolFromMolFile(file_path))
+        eval_results[result_dir] = cal_metrics(mol_list, pdb_path)
+        
+    torch.save(eval_results, save_result_path)
 
 
 if __name__ == '__main__':
@@ -70,6 +67,6 @@ if __name__ == '__main__':
     config = load_config('./configs/sample.yml')
     seed_all(config.sample.seed)
 
-    path = 'results/sdf_files/'  # input sdf path 
-    save_result_path = 'results/eval_files/'
+    path = 'eval_results/baselines_results/org_sdf_files/AMG/'  # input sdf path 
+    save_result_path = 'results/eval_files.pt'
     gen_results_file(path, save_result_path)
