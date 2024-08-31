@@ -16,7 +16,14 @@ conda create -n AMG python=3.7
 conda activate AMG
 conda install pytorch==1.13.1  pytorch-cuda=11.7 -c pytorch -c nvidia
 conda install -c conda-forge pdbfixer
-pip install pyscreener
+conda install conda-forge::openbabel
+
+pip install tensorboard==1.15.0
+pip isntall protobuf==3.19.6
+pip install networkx==2.6.3
+pip install rdkit==2023.3.2
+pip install biopython==1.81
+pip install pyscreener==1.1.1
 pip install -U "ray[default]"
 
 cd ADFRsuite_x86_64Linux_1.0
