@@ -42,33 +42,35 @@ pip install -e .
 ## Training
 Ligand encoder and fragment-based decoder pre-training:
 ```
-python pretrain_ligand.py
+python scripts/pretrain_ligand.py  
 ```
 
 Pocket encoder pre-training:
 ```
-python pretrain_pocket.py
+python scripts/pretrain_pocket.py
 ```
 
 The first training stage:
 ```
-python train_rec.py
+python scripts/train_rec.py
 ```
 
 The second training stage:
 ```
-python train_agent.py
+python scripts/train_agent.py
 ```
 
 ## Sampling
 ```
-python sample.py
+python scripts/sample_testset.py --config configs/rl.yml --start_index 0  --end_index 99 
 ```
+
 ## Evaluation
 ### Evaluation from sampling results
 ```
 python scripts/evaluate_amg.py
 ```
+
 ### Evaluation from meta files
 We provide the sampling results of our model and Pocket2Mol, TargetDiff, DecompDiff, ResGen, FLAG baselines [here](https://drive.google.com/drive/folders/1Gk4WFUiIQsp2UKT9dMI4OVljbIzzDZJs).
 
