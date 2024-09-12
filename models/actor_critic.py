@@ -73,16 +73,7 @@ class AMG_Actor(Actor):
         self.device = device
         self.logits_net = mlp([obs_dim] + list(hidden_sizes) + [act_dim], activation)
     def _distribution(self, obs):
-
-        # print("obs: " + str(obs.shape))
-        # print("obs_1: " + str(obs.reshape(-1, ).shape))
-        
         logits = self.logits_net(obs.cpu())
-        # if obs.shape[0] == 1000:
-        #     logits = self.logits_net(obs.reshape(-1,).cpu())
-        # else:
-        #     logits = self.logits_net(obs.reshape(obs.shape[0], -1).cpu())
-
         return Categorical(logits=logits)
 
     def _log_prob_from_distribution(self, pi, act):
@@ -96,31 +87,20 @@ class AMG_Critic(nn.Module):
         self.v_net = mlp([obs_dim] + list(hidden_sizes) + [1], activation)
         
     def forward(self, obs):
-        # print("obs: " + str(obs.shape))
-
-        # if obs.shape[0] == info['h_ctx_pocket'].shape[0]:
-        # feat = torch.cat([obs.to('cpu'), info['h_ctx_pocket'].to('cpu')], dim=0)
         value = torch.squeeze(self.v_net(obs.cpu()), -1)
-        # else:
-        #     feat = torch.cat([obs.to('cpu'), info['h_ctx_pocket'].repeat(obs.shape[0], 1).to('cpu')], dim=0)
-        #     value = torch.squeeze(self.v_net(feat.reshape(obs.shape[0], -1)), -1)
         return value 
 
     
 class AMG_ActorCritic(nn.Module):
     def __init__(self, observation_space, action_space, 
-                #  hidden_sizes=(64,64), activation=nn.Tanh, device='cpu'):
                 hidden_sizes=(64,64), activation=nn.Tanh, device='cpu'):
         super().__init__()
         self.action_space = action_space
         obs_dim = observation_space.shape[0]
         # policy builder depends on action space
         self.pi = AMG_Actor(obs_dim, action_space.n, hidden_sizes, activation, device)
-        # # build value function
+        # build value function
         self.v = AMG_Critic(obs_dim, hidden_sizes, activation)
-        
-        # self.pi = ScaRLPR_Actor(obs_dim, action_space.shape[0], hidden_sizes, activation, device)
-        # self.v = ScaRLPR_Critic(obs_dim, hidden_sizes, activation)
 
     def step(self, obs):
         with torch.no_grad():

@@ -115,10 +115,7 @@ class AMG(Module):
         h_ctx_pocket = self.pocket_encoder(node_attr=h_pocket, pos=pocket_pos, batch=batch_pocket)        
 
         # Encode interaction
-        # print("action: " + str(action))
-        # energies = torch.tensor([float(action), float(action), float(action)]).float().to(h_ctx_pocket.device)
         energies = torch.tensor(action).float().to(h_ctx_pocket.device)
-        # print("energies: " + str(energies))
         energies_feat = self.energies_emb(-energies)
   
         # Compose ligand, pocket, and interaction feature
@@ -370,14 +367,9 @@ class AMG(Module):
             new_pos, _, _ = kabsch_torch(coordinate[:len(reference_pos)], reference_pos.cpu(),
                                                 coordinate[len(reference_pos):])
             new_pos = new_pos.to(self.device)
-            
-            # new_pos += (batch['ligand_center'].to(self.device) * 0.8 + torch.mean(reference_pos, dim=0)*0.2) - torch.mean(new_pos, dim=0)
-      
-            # print('ref', batch['ligand_center'][j*3:j*3+3])
-            # print(torch.mean(new_pos, dim=0))
-            # new_pos += (batch['ligand_center'][j*3:j*3+3].to(self.device) - torch.mean(new_pos, dim=0)) 
+    
             new_pos += (batch['ligand_center'][j*3:j*3+3].to(self.device) - torch.mean(new_pos, dim=0)) * .8
-            # print('new', new_pos)
+
             pos_list.append(new_pos)
 
         atom_to_motif = [{} for _ in range(sample_size)]
@@ -392,7 +384,6 @@ class AMG(Module):
         return mol_list, atom_to_motif, motif_to_atoms, motif_wid, pos_list, feat_list
 
     def generate_second(self, batch, vocab, sample_size, pos_list, feat_list, motif_id, finished, i, mol_list, atom_to_motif, motif_to_atoms, motif_wid, action=None):
-        # try:
         repeats = torch.tensor([len(pos) for pos in pos_list])
         ligand_batch = torch.repeat_interleave(torch.arange(sample_size), repeats)
 
@@ -468,7 +459,6 @@ class AMG(Module):
                     new_pos = R * np.matrix(mol.GetConformer().GetPositions()[new_idx]).T + np.tile(T, (1, len(new_idx)))
                     new_pos = np.array(new_pos.T)'''
             new_pos = mol.GetConformer().GetPositions()[new_idx]
-            # new_pos, _, _ = kabsch_torch(torch.tensor(anchor_pos_new).to(h_ctx_focal.device), anchor_pos, torch.tensor(new_pos).to(h_ctx_focal.device))
             new_pos, _, _ = kabsch_torch(torch.tensor(anchor_pos_new), anchor_pos.cpu(), torch.tensor(new_pos))
             new_pos = new_pos.to(self.device)
             conf = mol.GetConformer()
@@ -592,8 +582,7 @@ class AMG(Module):
             target_vdw_radii,
             hydrophobic_interaction_indice,
         )
-        # print(hydrophobic)
-        # print(hydrophobic_interaction_indice)
+
         energies.append(hydrophobic)
        
         energies = torch.cat(energies, -1)
