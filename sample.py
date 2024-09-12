@@ -1,11 +1,9 @@
 from models.bio_markov import CustomEnv
 from spinningup.spinup.utils.mpi_tools import mpi_fork
 from spinningup.spinup.algos.pytorch.ppo.ppo import PPOBuffer
-import spinningup.spinup.algos.pytorch.ppo.core as core
-from spinup.utils.run_utils import setup_logger_kwargs
 import gym
 from models.actor_critic import AMG_ActorCritic
-from utils.misc import seed_all, load_config, get_new_log_dir, get_logger
+from utils.misc import load_config, get_new_log_dir, get_logger
 from utils.mol_tree import Vocab
 import time
 import numpy as np
@@ -14,11 +12,8 @@ import shutil
 from torch.optim import Adam
 import gym
 import time
-import spinningup.spinup.algos.pytorch.ppo.core as core
-from spinningup.spinup.utils.logx import EpochLogger
-from spinningup.spinup.utils.mpi_pytorch import setup_pytorch_for_mpi, sync_params, mpi_avg_grads
-from spinningup.spinup.utils.mpi_tools import mpi_fork, mpi_avg, proc_id, mpi_statistics_scalar, num_procs
-import torch.utils.tensorboard
+from spinningup.spinup.utils.mpi_pytorch import setup_pytorch_for_mpi, sync_params
+from spinningup.spinup.utils.mpi_tools import mpi_fork, num_procs
 import argparse
 from models.AMG import AMG
 from utils.datasets import *
@@ -37,8 +32,8 @@ if __name__ == '__main__':
     parser.add_argument('--device', type=str, default='cuda:0')
     parser.add_argument('--outdir', type=str, default='./sampled_results/')
     parser.add_argument('--config', type=str, default='./configs/rl.yml')
-    parser.add_argument('--load_rl_model', type=str, default=None)
-    parser.add_argument('--PR_path', type=str, default=None,
+    parser.add_argument('--load_rl_model', type=str, default='./ckpts/rl_agent.pt')
+    parser.add_argument('--PR_path', type=str, default='./ckpts/pr_model.pt',
                             help='Load pretraining representation of ligand and pocket') 
     parser.add_argument('--temp_dir', type=str, default='./temp_files/')
     parser.add_argument('--vocab_path', type=str, default='./dataset/vocab_np_crossdocked_pocket.txt')
