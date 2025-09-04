@@ -77,3 +77,22 @@ python scripts/evaluate_amg.py
 We provide the sampling results of our model and Pocket2Mol, TargetDiff, DecompDiff, ResGen, FLAG baselines [here](https://drive.google.com/drive/folders/1Gk4WFUiIQsp2UKT9dMI4OVljbIzzDZJs).
 
 You can directly reproduce the results reported in the paper quickly with [summary.ipynb](https://github.com/ispc-lab/AMG/blob/main/notebooks/summary.ipynb).
+
+
+
+## Citation
+If you find our code helpful, please cite 
+
+```bibtex
+@article{zhang2025deep,
+  title={Deep reinforcement learning as an interaction agent to steer fragment-based 3D molecular generation for protein pockets},
+  author={Zhang, Xudong and Hou, Jing and Qu, Sanqing and Lu, Fan and Tian, Zhixin and Knoll, Alois and Chen, Guang and Gao, Shaorong and Zhang, Yanping},
+  journal={Briefings in Bioinformatics},
+  volume={26},
+  number={4},
+  pages={bbae531},
+  year={2025},
+  publisher={Oxford University Press}
+}
+
+```
